@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dog_care/Pages/HomePage.dart';
+import 'package:dog_care/main.dart';
 import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart' as sql;

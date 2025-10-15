@@ -1,118 +1,130 @@
 import 'package:dog_care/Extensions/EmptyPetInfo.dart';
+import 'package:dog_care/Extensions/SpecializedElevatedButton.dart';
 import 'package:flutter/material.dart';
 
-/*
-SafeArea(
-        child:Center(
-          child: Text("Pets Page"),
-        )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.pets),
-      ),
-*/
 
-class PetsPage extends StatelessWidget {
+abstract class _AbstractPage extends StatelessWidget {
+  final double screenHeight;
+  final double screenWidth;
+
+  const _AbstractPage({super.key , required this.screenHeight, required this.screenWidth});
+}
+
+class PetsPage extends _AbstractPage {
+
+  const PetsPage({
+    super.key,
+    required super.screenHeight,
+    required super.screenWidth,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
-            child: EmptyPetInfoCard(),
+            child: EmptyInfoCard(
+              screenHeight: screenHeight, 
+              screenWidth: screenWidth, 
+              sectionText: "Your buddy's profiles live here", 
+              subText:"Hey there! This is where you can keep all your buddy's information. Tap the '+' button to add your buddy!",
+              icon: Icons.article_rounded,
+            ),
       ),  
-      floatingActionButton: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF20DF6C),
-          fixedSize: Size(MediaQuery.of(context).size.width * 0.92, MediaQuery.of(context).size.height * 0.06),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add,
-              size: MediaQuery.of(context).size.width * 0.05,
-              color: const Color.fromARGB(255, 240, 239, 239),
-              fontWeight: FontWeight.bold,
-            ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.015),
-            Text(
-              'Add New Pet',
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.04,
-                color: const Color.fromARGB(255, 240, 239, 239),
-                fontWeight: FontWeight.bold
-              ),
-            ),
-          ],
-        ),
-      onPressed: () {},
-      )
+      floatingActionButton: SpecializedElevatedButton(
+        screenHeight: screenHeight, 
+        screenWidth: screenWidth, 
+        sectionText: 'Add New Pet',
+      ),
     );  
   }
 }
 
-class DatesPage extends StatelessWidget {
+class VaccinationsPage extends _AbstractPage {
+
+  const VaccinationsPage({
+    super.key,
+    required super.screenHeight,
+    required super.screenWidth,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.event_rounded,
-              size: MediaQuery.of(context).size.height * 0.2,
-              color: Theme.of(context).colorScheme.primary,
+            child: EmptyInfoCard(
+              screenHeight: screenHeight, 
+              screenWidth: screenWidth, 
+              sectionText: "Keep track of your buddy's vaccinations here!", 
+              subText:"No records yet. Tap the '+' to add your buddy's vaccination",
+              icon: Icons.vaccines_rounded,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-            Text(
-              'Your Sweeties Dates',
-              style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.03, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            const Text("You can save your sweeties dates, here.")
-          ],
-        )
+      ),  
+      floatingActionButton: SpecializedElevatedButton(
+        screenHeight: screenHeight, 
+        screenWidth: screenWidth, 
+        sectionText: 'Add New Vaccination',
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.event_rounded),
-      ),
-    );
+    );  
   }
 }
 
-class AlbumsPage extends StatelessWidget {
+class AlbumsPage extends _AbstractPage {
+
+  const AlbumsPage({
+    super.key,
+    required super.screenHeight,
+    required super.screenWidth,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.photo_album,
-              size: MediaQuery.of(context).size.height * 0.2,
-              color: Theme.of(context).colorScheme.primary,
+            child: EmptyInfoCard(
+              screenHeight: screenHeight, 
+              screenWidth: screenWidth, 
+              sectionText: "Your buddy's albums live here",
+              subText:"Hey there! This is where you can keep all your buddy's albums or album. Tap the '+' button to add your buddy's album!",
+              icon: Icons.event_rounded,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-            Text(
-              'Your Sweeties Albums',
-              style: TextStyle(fontSize: MediaQuery.of(context).size.height * 0.03, fontWeight: FontWeight.bold),
+      ),  
+      floatingActionButton: SpecializedElevatedButton(
+        screenHeight: screenHeight, 
+        screenWidth: screenWidth, 
+        sectionText: 'Add New Album',
+      ),
+    );  
+  }
+}
+
+class AppointmentsPage extends _AbstractPage {
+
+  const AppointmentsPage({
+    super.key,
+    required super.screenHeight,
+    required super.screenWidth,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 240, 239, 239),
+      body: Center(
+            child: EmptyInfoCard(
+              screenHeight: screenHeight, 
+              screenWidth: screenWidth, 
+              sectionText: "Keep track of your buddy's appointments here!", 
+              subText:"Hey there! This is where you can keep all your buddy's appointment information.",
+              icon: Icons.event_rounded,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            const Text("You can save your sweeties photos, here.")
-          ],
-        )
+      ),  
+      floatingActionButton: SpecializedElevatedButton(
+        screenHeight: screenHeight, 
+        screenWidth: screenWidth, 
+        sectionText: 'Add New Appointment',
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add_photo_alternate),
-      ),
-    );
+    );  
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dog_care/Pages/Pages.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +28,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: SafeArea(
@@ -42,10 +44,10 @@ class _HomePage extends State<HomePage> {
                 index: _selectedIndex,
                 sizing: StackFit.expand,
                 children: [
-                  PetsPage(),
-                  DatesPage(),
-                  AlbumsPage(),
-                  Text("hello")
+                  PetsPage(screenHeight: screenHeight, screenWidth: screenWidth,),
+                  VaccinationsPage(screenHeight: screenHeight, screenWidth: screenWidth,),
+                  AlbumsPage(screenHeight: screenHeight, screenWidth: screenWidth,),
+                  AppointmentsPage(screenHeight: screenHeight, screenWidth: screenWidth,),
                 ],
               )
           ),

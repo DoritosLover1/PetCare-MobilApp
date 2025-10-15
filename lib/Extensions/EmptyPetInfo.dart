@@ -1,7 +1,23 @@
 
 import 'package:flutter/material.dart';
 
-class EmptyPetInfoCard extends StatelessWidget{
+class EmptyInfoCard extends StatelessWidget{
+
+  final double screenWidth;
+  final double screenHeight;
+  final String sectionText;
+  final String subText;
+  final IconData icon;
+
+
+  const EmptyInfoCard({
+    super.key,
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.sectionText,
+    required this.subText,
+    required this.icon
+  });
 
   @override
   Widget build(BuildContext context){
@@ -17,39 +33,39 @@ class EmptyPetInfoCard extends StatelessWidget{
               )
             ]
           ),
-          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.03),
-          width: MediaQuery.of(context).size.width * 0.6,
-          height: MediaQuery.of(context).size.height * 0.5,
+          padding: EdgeInsets.all(screenWidth * 0.03),
+          width: screenWidth * 0.6,
+          height: screenHeight * 0.5,
           child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.2,
-              height: MediaQuery.of(context).size.width * 0.2,
+              width: screenWidth * 0.2,
+              height: screenWidth * 0.2,
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 200, 238, 215),
                 shape: BoxShape.circle
               ),
               child: Icon(
-                Icons.article_rounded,
-                size: MediaQuery.of(context).size.width * 0.1,
+                icon,
+                size: screenWidth* 0.1,
                 color: const Color(0xFF20DF6C),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.015),
+            SizedBox(height: screenHeight * 0.015),
             Text(
-              "Your Pet Profiles Live Here", 
+              sectionText, 
               style: TextStyle(
-                fontSize: MediaQuery.of(context).size.height * 0.025, 
+                fontSize: screenHeight * 0.025, 
                 fontWeight: FontWeight.bold
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+            SizedBox(height: screenHeight * 0.01),
             Text(
-              "Hey there! This is where you can keep all your buddy's information. Click the '+' button to add your first pet!", 
+              subText, 
               style: TextStyle(
-                fontSize: MediaQuery.of(context).size.height * 0.015, 
+                fontSize: screenHeight * 0.015, 
                 fontWeight: FontWeight.bold,
                 color: const Color.fromARGB(255, 122, 122, 122)
               ),
