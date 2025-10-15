@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:dog_care/Extensions/NavRail.dart';
 import 'package:dog_care/Pages/Pages.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +16,6 @@ class DogCareApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(216, 216, 158, 51)),
         useMaterial3: true,
       ),
       home: const HomePage(),
@@ -36,42 +34,52 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(
-          "Pet Care",
-          style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.09,
-            fontWeight: FontWeight.bold,
-          ),
-        )
-      ),
+      backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: SafeArea(
-        child: Row(
-          children: [
-            NavRail(
-              selectedIndex: _selectedIndex, 
-              onDestinationSelected: (i) {
-                setState(() {
-                  _selectedIndex = i;
-                });
-              },
-            ),
-            Expanded(
-              child: IndexedStack(
+        child: Center(
+          child: 
+            IndexedStack(
                 index: _selectedIndex,
                 sizing: StackFit.expand,
                 children: [
                   PetsPage(),
                   DatesPage(),
                   AlbumsPage(),
+                  Text("hello")
                 ],
-              ) 
-            ),
-          ],
+              )
+          ),
         ),
-      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedItemColor: const Color(0xFF20DF6C),
+        unselectedItemColor: const Color(0xFF64748B),
+        currentIndex: _selectedIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pets),
+            label: "Pets",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.vaccines_rounded),
+            label: "Vaccinations",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.photo_album_rounded),
+            label: "Albums",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today_rounded),
+            label: "Appointments",
+          ),
+        ],
+        onTap:(value) {
+          setState(() {
+            _selectedIndex = value;
+          });
+        }, 
+      ) ,
     );
   }
 }
