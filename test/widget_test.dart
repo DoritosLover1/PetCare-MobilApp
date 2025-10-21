@@ -1,30 +1,48 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:dog_care/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dog_care/main.dart';
+// Import your actual HomePage from main.dart
+// import 'package:dog_care/main.dart'; // or wherever HomePage is defined
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const HomePage());
+  testWidgets('HomePage displays content and navigation bar', (WidgetTester tester) async {
+    // Wrap HomePage in MaterialApp with proper localization
+    await tester.pumpWidget(
+      MaterialApp(
+        home: HomePage(),
+      ),
+    );
+    
+    // Wait for the widget tree to settle
+    await tester.pumpAndSettle();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify BottomNavigationBar items exist
+    expect(find.text('Pets'), findsOneWidget);
+    expect(find.text('Vaccinations'), findsOneWidget);
+    expect(find.text('Albums'), findsOneWidget);
+    expect(find.text('Appointments'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify initial content displays
+    expect(find.byType(Scaffold), findsOneWidget);
+  });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  testWidgets('HomePage navigation works correctly', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: HomePage(),
+      ),
+    );
+    
+    await tester.pumpAndSettle();
+
+    // Test tapping on different navigation items
+    await tester.tap(find.byIcon(Icons.vaccines_rounded));
+    await tester.pumpAndSettle();
+    expect(find.byType(Scaffold), findsOneWidget);
+
+    await tester.tap(find.byIcon(Icons.photo_album_rounded));
+    await tester.pumpAndSettle();
+    expect(find.byType(Scaffold), findsOneWidget);
   });
 }
