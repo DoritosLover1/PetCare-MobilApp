@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:dog_care/Extensions/EmptyPetInfo.dart';
+import 'package:dog_care/Extensions/PetCard.dart';
 import 'package:dog_care/Extensions/SpecializedElevatedButton.dart';
 import 'package:flutter/material.dart';
 
@@ -12,24 +15,41 @@ abstract class _AbstractPage extends StatelessWidget {
 
 class PetsPage extends _AbstractPage {
 
-  const PetsPage({
+  PetsPage({
     super.key,
     required super.screenHeight,
     required super.screenWidth,
   });
+
+  final animalList = [{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)},{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)},{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)},{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)}]; // Placeholder for animal list
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
-            child: EmptyInfoCard(
+            child: 
+            animalList.isEmpty ? 
+            EmptyInfoCard(
               screenHeight: screenHeight, 
               screenWidth: screenWidth, 
               sectionText: "Your buddy's profiles live here", 
               subText:"Hey there! This is where you can keep all your buddy's information. Tap the '+' button to add your buddy!",
               icon: Icons.article_rounded,
-            ),
+            )
+            : ListView.builder(
+              itemCount: animalList.length,
+              itemBuilder: (context, index) {
+                final pet = animalList[index];
+                return PetCard (
+                  petName: pet["name"] as String,
+                  petBreed: pet["breed"] as String,
+                  petAge: pet["age"] as double,
+                  petGender: pet["gender"] as String,
+                  petImage: pet["image"] as Uint8List,
+                );
+              },
+            )
       ),  
       floatingActionButton: SpecializedElevatedButton(
         screenHeight: screenHeight, 
