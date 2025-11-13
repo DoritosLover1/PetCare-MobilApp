@@ -1,8 +1,10 @@
+import 'package:dog_care/DB/DBConnection.dart';
 import 'package:dog_care/Pages/Pages.dart';
 import 'package:flutter/material.dart';
 
 
 void main() async {
+  DBConnection();
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const DogCareApp());

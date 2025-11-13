@@ -1,72 +1,80 @@
 import 'dart:typed_data';
 
+import 'package:dog_care/DB/DBConnection.dart';
 import 'package:dog_care/Extensions/EmptyPetInfo.dart';
 import 'package:dog_care/Extensions/PetCard.dart';
 import 'package:dog_care/Extensions/SpecializedElevatedButton.dart';
 import 'package:flutter/material.dart';
 
 
-abstract class _AbstractPage extends StatelessWidget {
-  final double screenHeight;
-  final double screenWidth;
+class PetsPage extends StatefulWidget {
+  double screenHeight;
+  double screenWidth;
 
-  const _AbstractPage({super.key , required this.screenHeight, required this.screenWidth});
+  PetsPage({super.key, required this.screenHeight, required this.screenWidth});  
+
+  @override
+  _PetsPageState createState() => _PetsPageState();
 }
 
-class PetsPage extends _AbstractPage {
-
-  PetsPage({
-    super.key,
-    required super.screenHeight,
-    required super.screenWidth,
-  });
-
-  final animalList = [{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)},{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)},{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)},{"name" : "Buddy", "breed": "Golden Retriever", "age": 3.5, "gender": "Male", "image": Uint8List(0)}]; // Placeholder for animal list
+class _PetsPageState extends State<PetsPage>{
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
-      body: Center(
-            child: 
-            animalList.isEmpty ? 
-            EmptyInfoCard(
-              screenHeight: screenHeight, 
-              screenWidth: screenWidth, 
-              sectionText: "Your buddy's profiles live here", 
-              subText:"Hey there! This is where you can keep all your buddy's information. Tap the '+' button to add your buddy!",
-              icon: Icons.article_rounded,
-            )
-            : ListView.builder(
-              itemCount: animalList.length,
+      body: FutureBuilder(
+        future: DBConnection().getAnimals(),
+        builder: (context, snapshot) {
+          final animals = snapshot.data ?? <Map<String, dynamic>>[];
+          return Center(
+            child: (animals.isEmpty) ? EmptyInfoCard(
+                screenHeight: widget.screenHeight,
+                screenWidth: widget.screenWidth,
+                sectionText: "Your buddy's profiles live here",
+                subText:
+                  "Hey there! This is where you can keep all your buddy's information. Tap the '+' button to add your buddy!",
+                icon: Icons.article_rounded,
+              )
+              :
+              ListView.builder(
+              itemCount: animals.length,
               itemBuilder: (context, index) {
-                final pet = animalList[index];
-                return PetCard (
-                  petName: pet["name"] as String,
-                  petBreed: pet["breed"] as String,
-                  petAge: pet["age"] as double,
-                  petGender: pet["gender"] as String,
-                  petImage: pet["image"] as Uint8List,
+                final pet = animals[index];
+                return PetCard(
+                  petId: pet['id'] as int,
+                  petName: pet['name'] as String,
+                  petBreed: pet['breed'] as String,
+                  petAge: (pet['age'] as num).toDouble(),
+                  petGender: pet['gender'] as String,
+                  petImage: pet['image'] as Uint8List,
                 );
               },
             )
-      ),  
+          );
+        },
+      ),
       floatingActionButton: SpecializedElevatedButton(
-        screenHeight: screenHeight, 
-        screenWidth: screenWidth, 
+        screenHeight: widget.screenHeight,
+        screenWidth: widget.screenWidth,
         sectionText: 'Add New Pet',
       ),
-    );  
+    );
   }
 }
 
-class VaccinationsPage extends _AbstractPage {
 
-  const VaccinationsPage({
-    super.key,
-    required super.screenHeight,
-    required super.screenWidth,
-  });
+class VaccinationsPage extends StatefulWidget {
+  double screenHeight;
+  double screenWidth;
+
+  VaccinationsPage({super.key, required this.screenHeight, required this.screenWidth});  
+
+  @override
+  _VaccinationsPageState createState() => _VaccinationsPageState();
+}
+
+class _VaccinationsPageState extends State<VaccinationsPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -74,29 +82,34 @@ class VaccinationsPage extends _AbstractPage {
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
             child: EmptyInfoCard(
-              screenHeight: screenHeight, 
-              screenWidth: screenWidth, 
+              screenHeight: widget.screenHeight, 
+              screenWidth: widget.screenWidth, 
               sectionText: "Keep track of your buddy's vaccinations here!", 
               subText:"No records yet. Tap the '+' to add your buddy's vaccination",
               icon: Icons.vaccines_rounded,
             ),
       ),  
       floatingActionButton: SpecializedElevatedButton(
-        screenHeight: screenHeight, 
-        screenWidth: screenWidth, 
+        screenHeight: widget.screenHeight, 
+        screenWidth: widget.screenWidth, 
         sectionText: 'Add New Vaccination',
       ),
     );  
   }
 }
 
-class AlbumsPage extends _AbstractPage {
 
-  const AlbumsPage({
-    super.key,
-    required super.screenHeight,
-    required super.screenWidth,
-  });
+class AlbumsPage extends StatefulWidget {
+  double screenHeight;
+  double screenWidth;
+
+  AlbumsPage({super.key, required this.screenHeight, required this.screenWidth});  
+
+  @override
+  _AlbumsPageState createState() => _AlbumsPageState();
+}
+
+class _AlbumsPageState extends State<AlbumsPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -104,47 +117,73 @@ class AlbumsPage extends _AbstractPage {
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
             child: EmptyInfoCard(
-              screenHeight: screenHeight, 
-              screenWidth: screenWidth, 
+              screenHeight: widget.screenHeight, 
+              screenWidth: widget.screenWidth, 
               sectionText: "Your buddy's albums live here",
               subText:"Hey there! This is where you can keep all your buddy's albums or album. Tap the '+' button to add your buddy's album!",
               icon: Icons.event_rounded,
             ),
       ),  
       floatingActionButton: SpecializedElevatedButton(
-        screenHeight: screenHeight, 
-        screenWidth: screenWidth, 
+        screenHeight: widget.screenHeight, 
+        screenWidth: widget.screenWidth, 
         sectionText: 'Add New Album',
       ),
     );  
   }
 }
 
-class AppointmentsPage extends _AbstractPage {
 
-  const AppointmentsPage({
-    super.key,
-    required super.screenHeight,
-    required super.screenWidth,
-  });
+class AppointmentsPage extends StatefulWidget {
+  double screenHeight;
+  double screenWidth;
+
+  AppointmentsPage({super.key, required this.screenHeight, required this.screenWidth});  
+
+  @override
+  _AppointmentsPageState createState() => _AppointmentsPageState();  
+}
+
+class _AppointmentsPageState extends State<AppointmentsPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 240, 239, 239),
       body: Center(
             child: EmptyInfoCard(
-              screenHeight: screenHeight, 
-              screenWidth: screenWidth, 
+              screenHeight: widget.screenHeight, 
+              screenWidth: widget.screenWidth, 
               sectionText: "Keep track of your buddy's appointments here!", 
               subText:"Hey there! This is where you can keep all your buddy's appointment information.",
               icon: Icons.event_rounded,
             ),
       ),  
       floatingActionButton: SpecializedElevatedButton(
-        screenHeight: screenHeight, 
-        screenWidth: screenWidth, 
+        screenHeight: widget.screenHeight, 
+        screenWidth: widget.screenWidth, 
         sectionText: 'Add New Appointment',
       ),
     );  
+  }
+}
+
+
+class AddAnimalPage extends StatefulWidget {
+  double screenHeight;
+  double screenWidth;
+
+  AddAnimalPage({super.key, required this.screenHeight, required this.screenWidth});
+
+  @override
+  _AddAnimalPageState createState() => _AddAnimalPageState();
+}
+
+class _AddAnimalPageState extends State<AddAnimalPage> {
+  @override
+  Widget build(BuildContext) {
+    return Scaffold(
+      appBar: // Buraya özel appbar yapılacak her yere customize edilebilen,
+    )
   }
 }

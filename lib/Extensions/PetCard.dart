@@ -1,16 +1,18 @@
+import "package:dog_care/DB/DBConnection.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 
 class PetCard extends StatelessWidget {
-
   final String petName;
   final String petBreed;
   final String petGender;
   final double petAge;
   final Uint8List petImage;
+  final int petId;
 
   const PetCard({
     super.key,
+    required this.petId,
     required this.petName,
     required this.petBreed,
     required this.petAge,
@@ -85,11 +87,22 @@ class PetCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Text(
-                          petAge.toString() + " years",
+                          "$petAge years",
                           style: const TextStyle(
                             fontSize: 16.0,
                             color: Color(0xFF20DF6C),
                           ),
+                        ),
+                      ),
+                      const SizedBox(width: 50),
+                      IconButton(
+                        onPressed: () async {
+                          await DBConnection().deleteAnimal(petId);
+                        },
+                        icon: Icon(
+                          size: 30,
+                          Icons.delete_forever_rounded,
+                          color: Colors.redAccent,
                         ),
                       ),
                     ]
@@ -100,6 +113,7 @@ class PetCard extends StatelessWidget {
         ],
       ),
     ),
+
     );
   }
 }

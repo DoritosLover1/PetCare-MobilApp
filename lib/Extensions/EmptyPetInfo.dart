@@ -36,7 +36,7 @@ class EmptyInfoCard extends StatelessWidget{
       height: screenHeight * 0.5,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min, // Add this line
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
             width: screenWidth * 0.2,
@@ -59,8 +59,8 @@ class EmptyInfoCard extends StatelessWidget{
               fontWeight: FontWeight.bold
             ),
             textAlign: TextAlign.center,
-            maxLines: 2, // Add this
-            overflow: TextOverflow.ellipsis, // Add this
+            maxLines: 2,
+            overflow: TextOverflow.visible,
           ),
           SizedBox(height: screenHeight * 0.01),
           Text(
@@ -71,8 +71,8 @@ class EmptyInfoCard extends StatelessWidget{
               color: const Color.fromARGB(255, 122, 122, 122)
             ),
             textAlign: TextAlign.center,
-            maxLines: 2, // Add this
-            overflow: TextOverflow.ellipsis, // Add this
+            maxLines: 2,
+            overflow: TextOverflow.visible,
           ),
         ],
       ),

@@ -10,15 +10,14 @@ import 'package:sqflite/sqlite_api.dart';
 
 /// DB'DE OLACAK OLANLAR İÇİN NELER EKLENMESİ GEREKTİĞİNİ TARTIŞMALIYIM.
 class DBConnection {
-  sql.Database? _database;
-
-  DBConnection._();
-
   static final DBConnection _instance = DBConnection._();
+  sql.Database? _database;
 
   factory DBConnection() {
     return _instance;
   }
+
+  DBConnection._();
 
   Future<void> _initiliazeDB() async { 
     if (_database != null ) return;
@@ -97,13 +96,13 @@ class DBConnection {
          _database!.close();
         return 0;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
   }
 
-  Future<int?> createDate(int animal_id, String date, String? event_type, String? notes) async {
+  Future<int?> createDate(int animalId, String date, String? eventType, String? notes) async {
     /*
     """
     CREATE TABLE Dates(
@@ -121,9 +120,9 @@ class DBConnection {
       if(_database!.isOpen) {
           await _database!.insert("Dates",
           {
-            "animal_id": animal_id,
+            "animal_id": animalId,
             "date": date,
-            "event_type": event_type,
+            "event_type": eventType,
             "notes": notes
           },
           conflictAlgorithm: sql.ConflictAlgorithm.ignore
@@ -134,13 +133,13 @@ class DBConnection {
           _database!.close();
           return 0;
       }
-    }on DatabaseException catch(e) {
+    }on DatabaseException {
        _database!.close();
        return null;
     }
   }
 
-  Future<int?> createAlbum(int animal_id, Uint8List photo_blob, String? description) async {
+  Future<int?> createAlbum(int animalId, Uint8List photoBlob, String? description) async {
     /*
     """
     CREATE TABLE Albums(
@@ -158,8 +157,8 @@ class DBConnection {
       if(_database!.isOpen) {
           await _database!.insert("Albums",
           {
-            "animal_id": animal_id,
-            "photo_blob": photo_blob,
+            "animal_id": animalId,
+            "photo_blob": photoBlob,
             "description": description
           },
           conflictAlgorithm: sql.ConflictAlgorithm.ignore
@@ -170,7 +169,7 @@ class DBConnection {
           _database!.close();
           return 0;
       }
-    }on DatabaseException catch(e) {
+    }on DatabaseException {
        _database!.close();
        return null;
     }
@@ -200,13 +199,13 @@ class DBConnection {
          _database!.close();
         return 0;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
   }
 
-  Future<int?> updateDate(int id, String date, String? event_type, String? notes, int is_done) async {
+  Future<int?> updateDate(int id, String date, String? eventType, String? notes, int isDone) async {
     /*
     """
     CREATE TABLE Dates(
@@ -225,9 +224,9 @@ class DBConnection {
           int count = await _database!.update("Dates",
           {
             "date": date,
-            "event_type": event_type,
+            "event_type": eventType,
             "notes": notes,
-            "is_done": is_done
+            "is_done": isDone
           },
           where: "id = ?",
           whereArgs: [id],
@@ -239,7 +238,7 @@ class DBConnection {
           _database!.close();
           return 0;
       }
-    }on DatabaseException catch(e) {
+    }on DatabaseException {
        _database!.close();
        return null;
     }
@@ -276,7 +275,7 @@ class DBConnection {
           _database!.close();
           return 0;
       }
-    }on DatabaseException catch(e) {
+    }on DatabaseException {
        _database!.close();
        return null;
     }
@@ -300,7 +299,7 @@ class DBConnection {
          _database!.close();
         return 0;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -323,7 +322,7 @@ class DBConnection {
          _database!.close();
         return 0;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -346,7 +345,7 @@ class DBConnection {
          _database!.close();
         return 0;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -367,7 +366,7 @@ class DBConnection {
          _database!.close();
         return null;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -386,7 +385,7 @@ class DBConnection {
          _database!.close();
         return null;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -405,7 +404,7 @@ class DBConnection {
          _database!.close();
         return null;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -434,7 +433,7 @@ class DBConnection {
          _database!.close();
         return null;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -461,7 +460,7 @@ class DBConnection {
          _database!.close();
         return null;
       }
-    }on DatabaseException catch (e) {
+    }on DatabaseException {
        _database!.close();
       return null;
     }
@@ -487,7 +486,7 @@ class DBConnection {
           _database!.close();
           return null;
       }
-    } on DatabaseException catch(e) {
+    } on DatabaseException {
         _database!.close();
         return null;
     }
