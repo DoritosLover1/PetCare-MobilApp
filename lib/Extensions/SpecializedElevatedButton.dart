@@ -5,12 +5,14 @@ class SpecializedElevatedButton extends StatelessWidget {
   final double screenHeight;
   final double screenWidth;
   final String sectionText;
+  final VoidCallback? onPressed;
 
   const SpecializedElevatedButton({
     super.key,
     required this.screenHeight,
     required this.screenWidth,
-    required this.sectionText
+    required this.sectionText,
+    this.onPressed,
   });
 
   @override
@@ -23,6 +25,7 @@ class SpecializedElevatedButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
+        onPressed: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -43,7 +46,6 @@ class SpecializedElevatedButton extends StatelessWidget {
             ),
           ],
         ),
-      onPressed: () {},
     );     
   }
 }
